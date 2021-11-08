@@ -25,39 +25,43 @@ WITH include drop, create tables, create indexes, reset sequences
 BEFORE LOAD DO
 $$ create schema if not exists alien; $$;
 
-CREATE TABLE main (<br>
-  alien_id INT NOT NULL,<br>
-  witness_id INT NOT NULL,<br>
-  location_id INT NOT NULL,<br>
-FOREIGN KEY (alien_id)<br>
-    REFERENCES aliens (alien_id),<br>
-FOREIGN KEY (witness_id)<br>
-    REFERENCES witnesses (witness_id),<br>
-FOREIGN KEY (location_id)<br>
-    REFERENCES locations (location_id)<br>
-);<br>
-CREATE TABLE aliens (<br>
-	alien_id SMALLSERIAL PRIMARY KEY,<br>
-	alien_name VARCHAR (255) NOT NULL,<br>
-	alien_type VARCHAR (255) NOT NULL,<br>
-	alien_color VARCHAR (255) NOT NULL<br>
-);<br>
-CREATE TABLE witnesses (<br>
-    witness_id SMALLSERIAL PRIMARY KEY,<br>
-    witness_name VARCHAR (255),<br>
-    witness_last_name VARCHAR (255),<br>
-    witness_address VARCHAR (255),<br>
-    witness_age INT<br>
-);<br>
-CREATE TABLE locations (<br>
-    location_id serial PRIMARY KEY,<br>
-    lat DOUBLE PRECISION,<br>
-    lon DOUBLE PRECISION,<br>
-    place VARCHAR (255),<br>
-    country VARCHAR (255),<br>
-    region VARCHAR (255),<br>
-    time_of_day VARCHAR (255)<br>
-);
+	CREATE TABLE main (
+	alien_id INT NOT NULL,
+	witness_id INT NOT NULL,
+	location_id INT NOT NULL,
+	PRIMARY KEY (alien_id, witness_id, location_id),
+	FOREIGN KEY (alien_id)
+	REFERENCES aliens (alien_id)
+	ON DELETE CASCADE ,
+	FOREIGN KEY (witness_id)
+	REFERENCES witnesses (witness_id)
+	ON DELETE CASCADE ,
+	FOREIGN KEY (location_id)
+	REFERENCES locations (location_id)
+	ON DELETE CASCADE 
+	);
+	CREATE TABLE aliens (
+	alien_id SMALLSERIAL PRIMARY KEY,
+	alien_name VARCHAR (255) NOT NULL,
+	alien_type VARCHAR (255) NOT NULL,
+	alien_color VARCHAR (255) NOT NULL
+	);
+	CREATE TABLE witnesses (
+    witness_id SMALLSERIAL PRIMARY KEY,
+    witness_name VARCHAR (255),
+    witness_last_name VARCHAR (255),
+    witness_address VARCHAR (255),
+    witness_age INT
+	);
+	CREATE TABLE locations (
+    location_id serial PRIMARY KEY,
+    lat DOUBLE PRECISION,
+    lon DOUBLE PRECISION,
+    place VARCHAR (255),
+    country VARCHAR (255),
+    region VARCHAR (255),
+    time_of_day VARCHAR (255)
+	);
 
 
     INSERT INTO aliens(alien_name, alien_type, alien_color)

@@ -4,6 +4,7 @@
     CREATE VIEW aliv as select DISTINCT alien_id, alien_name, alien_type, alien_color FROM raw_input;
 	CREATE VIEW vvit as select DISTINCT witness_id, witness_name, witness_last_name, witness_address, witness_age FROM raw_input;
 	CREATE VIEW vloc as select DISTINCT location_id, lat, lon, place, country, region, time_of_day FROM raw_input;
+	CREATE VIEW td as select DISTINCT time_of_day FROM raw_input;
     select place, count(*) from raw_input group by  place order by count(*) desc limit 1;
     Ramla |  1401
     select region, count(*) from raw_input group by region order by count(*) limit 1;
